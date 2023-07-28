@@ -56,12 +56,12 @@ namespace KenKen
 
         public int Get(int x, int y)
         {
-            return gameArea[x + y * Height];
+            return gameArea[x + y * Width];
         }
 
         public void Set(int x, int y, int value)
         {
-            gameArea[x + y * Height] = value;
+            gameArea[x + y * Width] = value;
         }
 
         public bool isFree(int x, int y)
@@ -181,9 +181,9 @@ namespace KenKen
                     }
                     return product == result;
                 }
+                Sort();
                 if(operation == Operation.Subtraction)
                 {
-                    Sort(coordinates);
                     int val1 = kenken[coordinates[0].x, coordinates[0].y];
                     if (val1 == KenKen.EMPTYSLOT) return false;
                     int val2 = kenken[coordinates[1].x, coordinates[1].y];
@@ -192,12 +192,25 @@ namespace KenKen
                 }
                 if(operation == Operation.Division)
                 {
-                    Sort(coordinates);
                     int val1 = kenken[coordinates[0].x, coordinates[0].y];
                     if (val1 == KenKen.EMPTYSLOT) return false;
                     int val2 = kenken[coordinates[1].x, coordinates[1].y];
                     if (val2 == KenKen.EMPTYSLOT) return false;
                     return val1 / val2 == result;
+                }
+                return false;
+            }
+
+            public void Sort()
+            {
+                KenKen.Sort(coordinates);
+            }
+
+            public bool Contains(int x, int y)
+            {
+                for(int i = 0; i < coordinates.Count; i++)
+                {
+                    if (coordinates[i].x == x && coordinates[i].y == y) return true;
                 }
                 return false;
             }
