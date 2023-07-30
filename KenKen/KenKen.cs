@@ -15,13 +15,11 @@ namespace KenKen
 
         public List<Group> groups;
 
-        public readonly int Width = 6;
-        public readonly int Height = 6;
+        public readonly int Scale = 6;
 
         public KenKen()
         {
-            Width = 6;
-            Height = 6;
+            Scale = 6;
             groups = new List<Group>();
             gameArea = new int[36];
             for (int i = 0; i < gameArea.Length; i++)
@@ -30,12 +28,11 @@ namespace KenKen
             }
         }
 
-        public KenKen(int width, int height)
+        public KenKen(int scale)
         {
-            Width = width;
-            Height = height;
+            Scale = scale;
             groups = new List<Group>();
-            gameArea = new int[width * height];
+            gameArea = new int[scale * scale];
             for (int i = 0; i < gameArea.Length; i++)
             {
                 gameArea[i] = EMPTYSLOT;
@@ -56,12 +53,12 @@ namespace KenKen
 
         public int Get(int x, int y)
         {
-            return gameArea[x + y * Width];
+            return gameArea[x + y * Scale];
         }
 
         public void Set(int x, int y, int value)
         {
-            gameArea[x + y * Width] = value;
+            gameArea[x + y * Scale] = value;
         }
 
         public bool isFree(int x, int y)
@@ -74,7 +71,7 @@ namespace KenKen
             List<(int, int)> freePlaces = new List<(int, int)>();
             for (int i = 0; i < gameArea.Length; i++)
             {
-                if (gameArea[i] == EMPTYSLOT) freePlaces.Add((i % Width, i / Height));
+                if (gameArea[i] == EMPTYSLOT) freePlaces.Add((i % Scale, i / Scale));
             }
             return freePlaces;
         }
@@ -84,16 +81,16 @@ namespace KenKen
             // Init lists and arrays
             List<int>[] rows = new List<int>[9];
             List<int>[] columns = new List<int>[9];
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < Scale; i++)
             {
                 rows[i] = new List<int>();
                 columns[i] = new List<int>();
             }
 
             // enumerate every place in the sudoku
-            for (int y = 0; y < 9; y++)
+            for (int y = 0; y < Scale; y++)
             {
-                for (int x = 0; x < 9; x++)
+                for (int x = 0; x < Scale; x++)
                 {
                     // check validity
                     if (this[x, y] == EMPTYSLOT) return false;
@@ -109,9 +106,30 @@ namespace KenKen
             return true;
         }
 
+        public bool isGroupAssigned(int x, int y)
+        {
+            for(int i = 0; i < groups.Count; i++)
+            {
+                if (groups[i].Contains(x, y)) return true;
+            }
+            return false;
+        }
+
+        public bool areAllPlacesGroupAssigned()
+        {
+            for(int x = 0; x < Scale; x++)
+            {
+                for(int y = 0; y < Scale; y++)
+                {
+                    if (!isGroupAssigned(x, y)) return false;
+                }
+            }
+            return true;
+        }
+
         public object Clone()
         {
-            KenKen kenken = new KenKen(Width,Height);
+            KenKen kenken = new KenKen(Scale);
             for(int i = 0; i < gameArea.Length; i++)
             {
                 kenken.gameArea[i] = gameArea[i];
@@ -181,6 +199,10 @@ namespace KenKen
                     }
                     return product == result;
                 }
+                if(operation == Operation.None)
+                {
+                    return result == kenken[coordinates[0].x, coordinates[0].y];
+                }
                 Sort();
                 if(operation == Operation.Subtraction)
                 {
@@ -232,7 +254,8 @@ namespace KenKen
                 Addition,
                 Subtraction,
                 Multiplication,
-                Division
+                Division,
+                None
             }
         }
     }

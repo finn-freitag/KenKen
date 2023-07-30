@@ -16,17 +16,11 @@ namespace KenKen
         public Form1()
         {
             InitializeComponent();
-            KenKen kenken = new KenKen(6, 4);
-            kenken[0, 0] = 3;
-            kenken[1, 1] = 6;
-            KenKen.Group g1 = new KenKen.Group();
-            g1.result = 24;
-            g1.operation = KenKen.Group.Operation.Multiplication;
-            g1.coordinates.Add((0, 0));
-            g1.coordinates.Add((0, 1));
-            g1.coordinates.Add((1, 1));
-            g1.coordinates.Add((1, 2));
-            kenken.groups.Add(g1);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            KenKen kenken = new KenKenGenerator().Generate();
             pictureBox1.Image = new Bitmap(new MemoryStream(new PngExporter().Export(kenken)));
         }
     }

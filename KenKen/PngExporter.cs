@@ -20,7 +20,7 @@ namespace KenKen
             Pen bgb = new Pen(Background, 5);
             Pen fgb = new Pen(Foreground, 5);
 
-            Bitmap bmp = new Bitmap(4 + kenken.Width * 55, 4 + kenken.Height * 55);
+            Bitmap bmp = new Bitmap(4 + kenken.Scale * 55, 4 + kenken.Scale * 55);
             Graphics g = Graphics.FromImage(bmp);
             
             g.FillRectangle(Background, 0, 0, bmp.Width, bmp.Height);
@@ -66,9 +66,9 @@ namespace KenKen
 
             Font bigFont = new Font(FontFamily.GenericSansSerif, 30, FontStyle.Bold);
 
-            for(int y = 0; y < kenken.Height; y++)
+            for(int y = 0; y < kenken.Scale; y++)
             {
-                for(int x = 0; x < kenken.Width; x++)
+                for(int x = 0; x < kenken.Scale; x++)
                 {
                     if (kenken[x, y] != KenKen.EMPTYSLOT) g.DrawString(Convert.ToString(kenken[x, y]), bigFont, Foreground, 10 + 55 * x, 8 + 55 * y);
                 }
@@ -96,6 +96,8 @@ namespace KenKen
                     return "×";
                 case KenKen.Group.Operation.Division:
                     return "÷";
+                case KenKen.Group.Operation.None:
+                    return "";
             }
             return "?";
         }
