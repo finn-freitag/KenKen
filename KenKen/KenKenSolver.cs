@@ -8,8 +8,6 @@ namespace KenKen
 {
     public class KenKenSolver : IKenKenSolver
     {
-        private static Random r = new Random(DateTime.Now.GetHashCode());
-
         public bool Solve(KenKen kenken)
         {
             kenken.Sort();
