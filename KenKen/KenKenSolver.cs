@@ -8,6 +8,8 @@ namespace KenKen
 {
     public class KenKenSolver : IKenKenSolver
     {
+        private static Random r = new Random(DateTime.Now.GetHashCode());
+
         public bool Solve(KenKen kenken)
         {
             kenken.Sort();
@@ -52,7 +54,7 @@ namespace KenKen
                 KenKen newTry = (KenKen)kenken.Clone();
                 newTry[possibilities[0].x, possibilities[0].y] = possibilities[0].possibleNums[i];
                 bool success = Solve(newTry);
-                if (success)
+                if (success && newTry.isValidSolved())
                 {
                     for (int j = 0; j < kenken.gameArea.Length; j++)
                     {
@@ -116,7 +118,7 @@ namespace KenKen
                 for(int i = 0; i < group.coordinates.Count; i++)
                 {
                     int val = kenken[group.coordinates[i].x, group.coordinates[i].y];
-                    if(val!= KenKen.EMPTYSLOT)
+                    if (val != KenKen.EMPTYSLOT)
                     {
                         res *= val;
                     }
