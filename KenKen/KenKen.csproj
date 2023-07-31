@@ -55,8 +55,10 @@
     <Compile Include="IKenKenExporter.cs" />
     <Compile Include="IKenKenGenerator.cs" />
     <Compile Include="IKenKenImporter.cs" />
+    <Compile Include="IKenKenSolver.cs" />
     <Compile Include="KenKen.cs" />
     <Compile Include="KenKenGenerator.cs" />
+    <Compile Include="KenKenSolver.cs" />
     <Compile Include="PngExporter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

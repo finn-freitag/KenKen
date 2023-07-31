@@ -32,6 +32,7 @@ namespace KenKen
             {
                 kenken.gameArea[i] = KenKen.EMPTYSLOT;
             }
+            kenken.Sort();
             return kenken;
         }
 

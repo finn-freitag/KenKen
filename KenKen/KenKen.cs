@@ -106,6 +106,31 @@ namespace KenKen
             return true;
         }
 
+        public void Sort()
+        {
+            for(int i = 0; i < groups.Count; i++)
+            {
+                groups[i].Sort();
+            }
+            groups.Sort((Group a, Group b) =>
+            {
+                if (a.coordinates[0].y > b.coordinates[0].y) return 1;
+                if (a.coordinates[0].y < b.coordinates[0].y) return -1;
+                if (a.coordinates[0].x > b.coordinates[0].x) return 1;
+                if (a.coordinates[0].x < b.coordinates[0].x) return -1;
+                return 0;
+            });
+        }
+
+        public Group getGroup(int x, int y)
+        {
+            for(int i = 0; i < groups.Count; i++)
+            {
+                if (groups[i].Contains(x, y)) return groups[i];
+            }
+            return null;
+        }
+
         public bool isGroupAssigned(int x, int y)
         {
             for(int i = 0; i < groups.Count; i++)
