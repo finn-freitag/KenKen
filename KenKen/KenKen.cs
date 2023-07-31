@@ -215,7 +215,7 @@ namespace KenKen
                 }
                 if(operation == Operation.Multiplication)
                 {
-                    int product = 0;
+                    int product = 1;
                     for(int i = 0; i < coordinates.Count; i++)
                     {
                         int val = kenken[coordinates[i].x, coordinates[i].y];
@@ -274,13 +274,13 @@ namespace KenKen
                 return g;
             }
 
-            public enum Operation
+            public enum Operation : int
             {
-                Addition,
-                Subtraction,
-                Multiplication,
-                Division,
-                None
+                None = 0,
+                Addition = 1,
+                Subtraction = 2,
+                Multiplication = 3,
+                Division = 4
             }
         }
     }

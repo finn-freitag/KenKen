@@ -49,5 +49,38 @@ namespace KenKen
                 MessageBox.Show("Unsolvable!");
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV File|*.csv";
+            if(sfd.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllBytes(sfd.FileName, new CsvExporter().Export(kenken));
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "CSV File|*.csv";
+            if(ofd.ShowDialog()==DialogResult.OK)
+            {
+                kenken = new CsvImporter().Import(File.ReadAllBytes(ofd.FileName));
+                pictureBox1.Image = new Bitmap(new MemoryStream(new PngExporter().Export(kenken)));
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (kenken.isValidSolved())
+            {
+                MessageBox.Show("KenKen is solved correctly!");
+            }
+            else
+            {
+                MessageBox.Show("There is at least one mistake!");
+            }
+        }
     }
 }
